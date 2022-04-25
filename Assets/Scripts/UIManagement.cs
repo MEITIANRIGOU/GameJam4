@@ -13,7 +13,7 @@ public class UIManagement : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene(firstLevel);
     }
     public void QuitGame()
     {

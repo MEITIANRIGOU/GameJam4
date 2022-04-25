@@ -22,10 +22,27 @@ public class Player : Character
         {
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
         }
-
     }
     private void FixedUpdate()
     {
         rb.velocity = (new Vector2(inputX, inputY)).normalized * movementSpeed;
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.GetComponent<NPC>() != null)
+        {
+            NPC npc = collision.GetComponent<NPC>();
+            if (npc.transform.GetChild(0).GetComponent<SpriteRenderer>().color == Color.red && !npc.captured)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    int randX = Random.Range(-18, 19);
+                    int randY = Random.Range(15, 23);
+                    npc.transform.position = new Vector2(randX, randY);
+                    GameSystem.infectedPeople -= 1;
+                    npc.captured = true;
+                }
+            }
+        }
     }
 }

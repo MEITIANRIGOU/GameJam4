@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPC : Character
 {
     public bool infected;
+    public bool captured = false;
     public float testedTimer = 0;
     bool canInfect = false;
     float infectTimer = 0;
@@ -51,9 +52,14 @@ public class NPC : Character
     {
         if (collision.GetComponent<NPC>() != null && canInfect)
         {
-            collision.GetComponent<NPC>().infected = true;
-            canInfect = false;
-            infectTimer = 0;
+            if (collision.GetComponent<NPC>().infected == false)
+            {
+                collision.GetComponent<NPC>().infected = true;
+                GameSystem.healthyPeople -= 1;
+                GameSystem.infectedPeople += 1;
+                canInfect = false;
+                infectTimer = 0;
+            }
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
