@@ -10,11 +10,16 @@ public class NPC : Character
     float infectTimer = 0;
     int rotateAngle;
     float rotateTimer = 0;
-    
+    protected override void Start()
+    {
+        base.Start();
+        int rand = Random.Range(-179, 180);
+        transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, 0, rand));
+    }
     void Update()
     {
         rotateTimer += Time.deltaTime;
-        if (infected)
+        if (infected && infectTimer <= 20)
         {
             infectTimer += Time.deltaTime;
         }
@@ -54,9 +59,5 @@ public class NPC : Character
     private void OnCollisionEnter2D(Collision2D collision)
     {
         transform.GetChild(0).transform.Rotate(new Vector3(0, 0, 180));
-    }
-    void RevertColor()
-    {
-        
     }
 }
